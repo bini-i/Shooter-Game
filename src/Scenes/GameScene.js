@@ -1,26 +1,25 @@
 import 'phaser';
-import {Player, Target} from "./Entities";
+import { Player, Target } from './Entities';
 
 export default class GameScene extends Phaser.Scene {
   constructor() {
     super('Game');
-    this.player
+    this.player;
     this.score = 0;
     this.gameOver = false;
-    this.cursors
+    this.cursors;
   }
 
   create() {
-    
     this.add.image(400, 300, 'background');
     this.add.image(400, 300, 'moonOverlay');
     this.player = new Player(
-        this,
-        this.game.config.width * 0.5,
-        this.game.config.height * 0.5,
-        "spaceShip"
-        ); 
-    this.player.scale = 0.4
+      this,
+      this.game.config.width * 0.5,
+      this.game.config.height * 0.5,
+      'spaceShip',
+    );
+    this.player.scale = 0.4;
     this.keyUp = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
     this.keyDown = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
     this.keyLeft = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
@@ -32,19 +31,17 @@ export default class GameScene extends Phaser.Scene {
 
     this.time.addEvent({
       delay: 100,
-      callback: function() {
-        let target = new Target(
+      callback() {
+        const target = new Target(
           this,
           Phaser.Math.Between(0, this.game.config.width),
-          0
+          0,
         );
         this.targets.add(target);
       },
       callbackScope: this,
-      loop: true
+      loop: true,
     });
-
-    
   }
 
   update() {
@@ -52,23 +49,20 @@ export default class GameScene extends Phaser.Scene {
 
     if (this.keyUp.isDown) {
       this.player.moveUp();
-    }
-    else if (this.keyDown.isDown) {
+    } else if (this.keyDown.isDown) {
       this.player.moveDown();
     }
 
     if (this.keyLeft.isDown) {
       this.player.moveLeft();
-    }
-    else if (this.keyRight.isDown) {
+    } else if (this.keyRight.isDown) {
       this.player.moveRight();
     }
     if (this.keySpace.isDown) {
-      this.player.setData("isShooting", true);
-    }
-    else {
-      this.player.setData("timerShootTick", this.player.getData("timerShootDelay") - 1);
-      this.player.setData("isShooting", false);
+      this.player.setData('isShooting', true);
+    } else {
+      this.player.setData('timerShootTick', this.player.getData('timerShootDelay') - 1);
+      this.player.setData('isShooting', false);
     }
   }
 }
