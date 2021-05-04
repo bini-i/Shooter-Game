@@ -13,6 +13,8 @@ export class Player extends Entity {
   constructor(scene, x, y, key) {
     super(scene, x, y, key, 'Player');
     this.setData('speed', 200);
+    this.setData("timerShootDelay", 100);
+    this.setData("timerShootTick", this.getData("timerShootDelay") - 1);
   }
 
   moveUp() {
@@ -53,13 +55,14 @@ export class Player extends Entity {
 class PlayerLaser extends Entity {
   constructor(scene, x, y) {
     super(scene, x, y, 'bullet');
-    this.body.velocity.y = -500;
+    this.body.velocity.y = -Phaser.Math.FloatBetween(300, 600);
   }
 }
 
 export class Target extends Entity {
   constructor(scene, x, y) {
     super(scene, x, y, 'target');
-    this.body.velocity.x = 100;
+    this.body.velocity.x = Phaser.Math.FloatBetween(-20, 20);
+    this.body.velocity.y = Phaser.Math.FloatBetween(-20, 20);
   }
 }

@@ -16,7 +16,7 @@ export default class GameScene extends Phaser.Scene {
     this.player = new Player(
       this,
       this.game.config.width * 0.5,
-      this.game.config.height * 0.5,
+      this.game.config.height * 0.75,
       'spaceShip',
     );
     this.player.scale = 0.4;
@@ -27,31 +27,33 @@ export default class GameScene extends Phaser.Scene {
     this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
     this.playerLasers = this.add.group();
+
     this.targets = this.add.group();
 
     this.time.addEvent({
-      delay: 100,
+      delay: 500,
       callback() {
         const target = new Target(
           this,
           Phaser.Math.Between(0, this.game.config.width),
-          0,
+          this.game.config.width * 0.05,
         );
         this.targets.add(target);
+        this.targets.children.iterate((child) => {
+          this.physics.add.overlap(this.playerLasers, child, this.destroyTarget.bind(child), null, this);
+          // console.log(this)
+        })
       },
       callbackScope: this,
       loop: true,
-    });
+    })
+
+    // this.physics.add.collider(this.player, bombs, hitBomb, null, this);
   }
 
   update() {
     this.player.update();
 
-    if (this.keyUp.isDown) {
-      this.player.moveUp();
-    } else if (this.keyDown.isDown) {
-      this.player.moveDown();
-    }
 
     if (this.keyLeft.isDown) {
       this.player.moveLeft();
@@ -64,5 +66,11 @@ export default class GameScene extends Phaser.Scene {
       this.player.setData('timerShootTick', this.player.getData('timerShootDelay') - 1);
       this.player.setData('isShooting', false);
     }
+  }
+
+  destroyTarget(child) {
+      console.log(child)
+      child.body.enable = false
+      // target.disableBody(true, true)
   }
 }
