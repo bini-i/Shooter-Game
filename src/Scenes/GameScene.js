@@ -6,11 +6,11 @@ export default class GameScene extends Phaser.Scene {
     super('Game');
     this.player;
     this.score = 0;
-    this.gameOver = false;
-    this.cursors;
+    this.gameOn = false;
   }
 
   create() {
+    this.gameOn = false
     this.add.image(400, 300, 'background');
     this.add.image(400, 300, 'moonOverlay');
     this.player = new Player(
@@ -29,7 +29,28 @@ export default class GameScene extends Phaser.Scene {
     this.playerLasers = this.add.group();
 
     this.targets = this.add.group();
+    this.satellites = this.add.group();
 
+    this.time.addEvent({
+      delay: 8000,
+      callback() {
+        const satellite = new Target(
+          this,
+          this.game.config.width * 0.5,
+          this.game.config.width * 0.2,
+          'satellite',
+        );
+        satellite.body.collideWorldBounds = true
+        satellite.scale = 1.5;
+        this.satellites.add(satellite);
+        this.physics.add.collider(this.satellites, this.targets, (satellite, target) => {
+          satellite.destroy();
+        });
+        this.gameOn = true;
+      },
+      callbackScope: this,
+      loop: true,
+    });
     this.time.addEvent({
       delay: 500,
       callback() {
@@ -37,23 +58,64 @@ export default class GameScene extends Phaser.Scene {
           this,
           Phaser.Math.Between(0, this.game.config.width),
           this.game.config.width * 0.05,
+          'target',
         );
+        // target.body.collideWorldBounds = true
         this.targets.add(target);
-        this.targets.children.iterate((child) => {
-          this.physics.add.overlap(this.playerLasers, child, this.destroyTarget.bind(child), null, this);
-          // console.log(this)
-        })
+        this.physics.add.collider(this.playerLasers, this.targets, (playerLaser, target) => {
+          playerLaser.destroy();
+          target.destroy();
+        });
       },
       callbackScope: this,
       loop: true,
-    })
+    });
 
-    // this.physics.add.collider(this.player, bombs, hitBomb, null, this);
+    // const platforms = this.physics.add.staticGroup();
+
+    // platforms.create(400, 0).setScale(2).refreshBody();
+    // platforms.create(400, 200).setScale(2).refreshBody();
+
+    // this.physics.add.collider(this.targets, platforms, (target) => {
+    //   target.update();
+    // });
+    // this.physics.add.collider(this.satellites, platforms);
   }
 
   update() {
     this.player.update();
 
+    if (!this.satellites.children.size && this.gameOn) {
+      this.add.text(400, 300, 'Game Over', { fontSize: '40px', fill: '#fff' });
+      this.player.onDestroy();
+      return;
+    }
+
+    for (let i = 0; i < this.targets.getChildren().length; i++) {
+      const target = this.targets.getChildren()[i];
+
+      if (target.x < -target.displayWidth
+        || target.x > this.game.config.width + target.displayWidth
+        || target.y < -target.displayHeight * 4
+        || target.y > this.game.config.height + target.displayHeight) {
+        if (target) {
+          target.destroy();
+        }
+      }
+    }
+
+    for (let i = 0; i < this.satellites.getChildren().length; i++) {
+      const satellite = this.satellites.getChildren()[i];
+
+      if (satellite.x < -satellite.displayWidth
+        || satellite.x > this.game.config.width + satellite.displayWidth
+        || satellite.y < -satellite.displayHeight * 4
+        || satellite.y > this.game.config.height + satellite.displayHeight) {
+        if (satellite) {
+          satellite.destroy();
+        }
+      }
+    }
 
     if (this.keyLeft.isDown) {
       this.player.moveLeft();
@@ -66,11 +128,5 @@ export default class GameScene extends Phaser.Scene {
       this.player.setData('timerShootTick', this.player.getData('timerShootDelay') - 1);
       this.player.setData('isShooting', false);
     }
-  }
-
-  destroyTarget(child) {
-      console.log(child)
-      child.body.enable = false
-      // target.disableBody(true, true)
   }
 }

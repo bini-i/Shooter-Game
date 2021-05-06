@@ -87,8 +87,10 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.image('background', 'assets/back.png');
     this.load.image('moonOverlay', 'assets/moon_overlay.png');
     this.load.image('spaceShip', 'assets/DurrrSpaceShip.png');
-    this.load.image('bullet', 'assets/bullet1.png');
-    this.load.image('target', 'assets/bullet7.png');
+    this.load.image('bullet', 'assets/RocketWhite.png');
+    this.load.image('target', 'assets/RedPlanet.png');
+    this.load.image('satellite', 'assets/Satellite.png');
+    this.load.image('ground', 'assets/platform.png');
   }
 
   create() {
@@ -99,7 +101,6 @@ export default class PreloaderScene extends Phaser.Scene {
   }
 
   ready() {
-    this.scene.start('Game');
     this.readyCount++;
     if (this.readyCount === 1) {
       this.scene.start('Title');

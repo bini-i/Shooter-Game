@@ -25,16 +25,6 @@ export default class TitleScene extends Phaser.Scene {
     this.input.on('pointerout', (event, gameObjects) => {
       gameObjects[0].setTexture('blueButton1');
     });
-    // Options
-    this.optionsButton = this.add.sprite(300, 200, 'blueButton1').setInteractive();
-    this.centerButton(this.optionsButton);
-
-    this.optionsText = this.add.text(0, 0, 'Options', { fontSize: '32px', fill: '#fff' });
-    this.centerButtonText(this.optionsText, this.optionsButton);
-
-    this.optionsButton.on('pointerdown', (pointer) => {
-      this.scene.start('Options');
-    });
 
     // Credits
     this.creditsButton = this.add.sprite(300, 200, 'blueButton1').setInteractive();

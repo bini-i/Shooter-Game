@@ -1,4 +1,6 @@
-class Entity extends Phaser.GameObjects.Image {
+import TitleScene from './TitleScene';
+
+class Entity extends Phaser.GameObjects.Sprite {
   constructor(scene, x, y, key, type) {
     super(scene, x, y, key);
     this.scene = scene;
@@ -12,17 +14,9 @@ class Entity extends Phaser.GameObjects.Image {
 export class Player extends Entity {
   constructor(scene, x, y, key) {
     super(scene, x, y, key, 'Player');
-    this.setData('speed', 200);
-    this.setData("timerShootDelay", 100);
-    this.setData("timerShootTick", this.getData("timerShootDelay") - 1);
-  }
-
-  moveUp() {
-    this.body.velocity.y = -this.getData('speed');
-  }
-
-  moveDown() {
-    this.body.velocity.y = this.getData('speed');
+    this.setData('speed', 400);
+    this.setData('timerShootDelay', 100);
+    this.setData('timerShootTick', this.getData('timerShootDelay') - 1);
   }
 
   moveLeft() {
@@ -50,6 +44,17 @@ export class Player extends Entity {
       }
     }
   }
+
+  onDestroy() {
+    this.scene.time.addEvent({
+      delay: 1000,
+      callback() {
+        this.scene.scene.start('Title');
+      },
+      callbackScope: this,
+      loop: false,
+    });
+  }
 }
 
 class PlayerLaser extends Entity {
@@ -60,9 +65,14 @@ class PlayerLaser extends Entity {
 }
 
 export class Target extends Entity {
-  constructor(scene, x, y) {
-    super(scene, x, y, 'target');
+  constructor(scene, x, y, type) {
+    super(scene, x, y, type);
     this.body.velocity.x = Phaser.Math.FloatBetween(-20, 20);
     this.body.velocity.y = Phaser.Math.FloatBetween(-20, 20);
+  }
+
+  update() {
+    this.body.velocity.x = -this.body.velocity.x;
+    this.body.velocity.y = -this.body.velocity.y;
   }
 }
