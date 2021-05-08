@@ -1,4 +1,5 @@
-import 'phaser';
+// eslint-disable-next-line import/no-unresolved
+import Phaser from 'phaser';
 
 export default {
   type: Phaser.AUTO,

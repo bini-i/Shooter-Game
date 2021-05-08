@@ -1,4 +1,5 @@
-import 'phaser';
+// eslint-disable-next-line import/no-unresolved
+import Phaser from 'phaser';
 import config from '../Config/config';
 
 export default class TitleScene extends Phaser.Scene {
@@ -14,7 +15,7 @@ export default class TitleScene extends Phaser.Scene {
     this.gameText = this.add.text(0, 0, 'Play', { fontSize: '32px', fill: '#fff' });
     this.centerButtonText(this.gameText, this.gameButton);
 
-    this.gameButton.on('pointerdown', (pointer) => {
+    this.gameButton.on('pointerdown', () => {
       this.scene.start('Game');
     });
 
@@ -33,7 +34,7 @@ export default class TitleScene extends Phaser.Scene {
     this.creditsText = this.add.text(0, 0, 'Credits', { fontSize: '32px', fill: '#fff' });
     this.centerButtonText(this.creditsText, this.creditsButton);
 
-    this.creditsButton.on('pointerdown', (pointer) => {
+    this.creditsButton.on('pointerdown', () => {
       this.scene.start('Credits');
     });
 
@@ -49,11 +50,12 @@ export default class TitleScene extends Phaser.Scene {
   centerButton(gameObject, offset = 0) {
     Phaser.Display.Align.In.Center(
       gameObject,
-      this.add.zone(config.width / 2, config.height / 2 - offset * 100, config.width, config.height),
+      this.add.zone(config.width / 2, config.height / 2 - offset * 100,
+        config.width, config.height),
     );
   }
 
-  centerButtonText(gameText, gameButton) {
+  centerButtonText = (gameText, gameButton) => {
     Phaser.Display.Align.In.Center(
       gameText,
       gameButton,

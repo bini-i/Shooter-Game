@@ -1,16 +1,19 @@
-import 'phaser';
+// eslint-disable-next-line import/no-unresolved
+import Phaser from 'phaser';
 import { Player, Target } from './Entities';
 
 export default class GameScene extends Phaser.Scene {
   constructor() {
     super('Game');
-    this.player;
+    this.player = null;
     this.score = 0;
     this.gameOn = false;
+    this.counter = 0;
   }
 
   create() {
-    this.gameOn = false
+    this.gameOn = false;
+    this.counter = 0;
     this.add.image(400, 300, 'background');
     this.add.image(400, 300, 'moonOverlay');
     this.player = new Player(
@@ -40,10 +43,11 @@ export default class GameScene extends Phaser.Scene {
           this.game.config.width * 0.2,
           'satellite',
         );
-        satellite.body.collideWorldBounds = true
+        satellite.body.bounce.set(1, 1);
+        satellite.body.collideWorldBounds = true;
         satellite.scale = 1.5;
         this.satellites.add(satellite);
-        this.physics.add.collider(this.satellites, this.targets, (satellite, target) => {
+        this.physics.add.collider(this.satellites, this.targets, (satellite) => {
           satellite.destroy();
         });
         this.gameOn = true;
@@ -52,7 +56,7 @@ export default class GameScene extends Phaser.Scene {
       loop: true,
     });
     this.time.addEvent({
-      delay: 500,
+      delay: 1000,
       callback() {
         const target = new Target(
           this,
@@ -60,7 +64,10 @@ export default class GameScene extends Phaser.Scene {
           this.game.config.width * 0.05,
           'target',
         );
-        // target.body.collideWorldBounds = true
+
+        target.body.bounce.set(1, 1);
+        target.body.collideWorldBounds = true;
+
         this.targets.add(target);
         this.physics.add.collider(this.playerLasers, this.targets, (playerLaser, target) => {
           playerLaser.destroy();
@@ -71,48 +78,37 @@ export default class GameScene extends Phaser.Scene {
       loop: true,
     });
 
-    // const platforms = this.physics.add.staticGroup();
-
-    // platforms.create(400, 0).setScale(2).refreshBody();
-    // platforms.create(400, 200).setScale(2).refreshBody();
-
-    // this.physics.add.collider(this.targets, platforms, (target) => {
-    //   target.update();
-    // });
-    // this.physics.add.collider(this.satellites, platforms);
+    const score = this.add.text(750, 20, this.counter, { fontSize: '25px', fill: '#008000' });
+    this.time.addEvent({
+      delay: 1000,
+      callback() {
+        score.setText(this.counter);
+        this.counter += 1;
+      },
+      callbackScope: this,
+      loop: true,
+    });
   }
 
   update() {
     this.player.update();
 
     if (!this.satellites.children.size && this.gameOn) {
+      // this.counter
       this.add.text(400, 300, 'Game Over', { fontSize: '40px', fill: '#fff' });
       this.player.onDestroy();
       return;
     }
 
-    for (let i = 0; i < this.targets.getChildren().length; i++) {
-      const target = this.targets.getChildren()[i];
+    for (let i = 0; i < this.playerLasers.getChildren().length; i++) {
+      const playerLaser = this.playerLasers.getChildren()[i];
 
-      if (target.x < -target.displayWidth
-        || target.x > this.game.config.width + target.displayWidth
-        || target.y < -target.displayHeight * 4
-        || target.y > this.game.config.height + target.displayHeight) {
-        if (target) {
-          target.destroy();
-        }
-      }
-    }
-
-    for (let i = 0; i < this.satellites.getChildren().length; i++) {
-      const satellite = this.satellites.getChildren()[i];
-
-      if (satellite.x < -satellite.displayWidth
-        || satellite.x > this.game.config.width + satellite.displayWidth
-        || satellite.y < -satellite.displayHeight * 4
-        || satellite.y > this.game.config.height + satellite.displayHeight) {
-        if (satellite) {
-          satellite.destroy();
+      if (playerLaser.x < -playerLaser.displayWidth
+        || playerLaser.x > this.game.config.width + playerLaser.displayWidth
+        || playerLaser.y < -playerLaser.displayHeight * 4
+        || playerLaser.y > this.game.config.height + playerLaser.displayHeight) {
+        if (playerLaser) {
+          playerLaser.destroy();
         }
       }
     }

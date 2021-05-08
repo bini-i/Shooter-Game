@@ -1,4 +1,5 @@
-import 'phaser';
+// eslint-disable-next-line import/no-unresolved
+import Phaser from 'phaser';
 
 export default class PreloaderScene extends Phaser.Scene {
   constructor() {
@@ -52,7 +53,7 @@ export default class PreloaderScene extends Phaser.Scene {
 
     // update progress bar
     this.load.on('progress', (value) => {
-      percentText.setText(`${parseInt(value * 100)}%`);
+      percentText.setText(`${parseInt(value * 100, 10)}%`);
       progressBar.clear();
       progressBar.fillStyle(0xffffff, 1);
       progressBar.fillRect(250, 280, 300 * value, 30);
@@ -93,16 +94,22 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.image('ground', 'assets/platform.png');
   }
 
-  create() {
-  }
-
   init() {
     this.readyCount = 0;
   }
 
   ready() {
-    this.readyCount++;
+    this.readyCount += 1;
     if (this.readyCount === 1) {
+      // const url = 'https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/gTxJ39hkqRHtPuDU1RuN/scores/';
+      // fetch(url, { mode: 'cors' })
+      //   .then((response) => response.json())
+      //   .then((data) => {
+
+      //   })
+      //   .catch((error) => {
+      //     reject(error);
+      //   });
       this.scene.start('Title');
     }
   }

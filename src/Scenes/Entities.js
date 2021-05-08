@@ -1,6 +1,8 @@
-import TitleScene from './TitleScene';
+// eslint-disable-next-line import/no-unresolved
+/* eslint-disable */
+import Phaser from 'phaser';
 
-class Entity extends Phaser.GameObjects.Sprite {
+export class Entity extends Phaser.GameObjects.Sprite {
   constructor(scene, x, y, key, type) {
     super(scene, x, y, key);
     this.scene = scene;
@@ -11,6 +13,12 @@ class Entity extends Phaser.GameObjects.Sprite {
   }
 }
 
+export class PlayerLaser extends Entity {
+  constructor(scene, x, y) {
+    super(scene, x, y, 'bullet');
+    this.body.velocity.y = -Phaser.Math.FloatBetween(300, 600);
+  }
+}
 export class Player extends Entity {
   constructor(scene, x, y, key) {
     super(scene, x, y, key, 'Player');
@@ -49,18 +57,12 @@ export class Player extends Entity {
     this.scene.time.addEvent({
       delay: 1000,
       callback() {
-        this.scene.scene.start('Title');
+        this.scene
+          .this.scene.scene.start('Title');
       },
       callbackScope: this,
       loop: false,
     });
-  }
-}
-
-class PlayerLaser extends Entity {
-  constructor(scene, x, y) {
-    super(scene, x, y, 'bullet');
-    this.body.velocity.y = -Phaser.Math.FloatBetween(300, 600);
   }
 }
 
