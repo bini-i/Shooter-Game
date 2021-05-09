@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-unresolved
 /* eslint-disable */
 import Phaser from 'phaser';
 import axios from 'axios'
