@@ -29,6 +29,12 @@ This project is a javascript game built with Phaser 3 where a player is expected
 [Live Demo Link](https://www.binyamhailemeskel.me/Shooter-Game/)
 ## Getting Started
 
+### How to play.
+1. Enter name in the name field and click start
+2. Click play to start the game
+3. Click leaderboard to see scores of previous players
+4. Once the game starts, use the left and right arrow keys to move the spaceship to left and right
+5. Use spacebar to shoot down the red asteroids before they crash into the statellites
 ### To get a local copy up and running follow these simple example steps.
 
 1. On the project GitHub page, navigate to the main page of the repository.
