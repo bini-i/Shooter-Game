@@ -1,7 +1,8 @@
 // eslint-disable-next-line import/no-unresolved
 /* eslint-disable */
 import Phaser from 'phaser';
-
+import axios from 'axios'
+import config from '../Config/config';
 export class Entity extends Phaser.GameObjects.Sprite {
   constructor(scene, x, y, key, type) {
     super(scene, x, y, key);
@@ -53,10 +54,12 @@ export class Player extends Entity {
     }
   }
 
-  onDestroy() {
+  onDestroy(score) {
     this.scene.time.addEvent({
       delay: 1000,
       callback() {
+        axios.post('https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/J0cS5gwuXEpiiRrDlkUW/scores/', {'user': config.name, 'score': score })
+        .then(response => response.data).catch(error => error);
         this.scene.scene.start('Title');
       },
       callbackScope: this,

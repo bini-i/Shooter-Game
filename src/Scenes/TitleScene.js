@@ -27,6 +27,25 @@ export default class TitleScene extends Phaser.Scene {
       gameObjects[0].setTexture('blueButton1');
     });
 
+    // leaderboard
+    this.leaderBoardButton = this.add.sprite(200, 200, 'blueButton1').setInteractive();
+    this.centerButton(this.leaderBoardButton, 0);
+
+    this.leaderBoardText = this.add.text(0, 0, 'Leader Board', { fontSize: '25px', fill: '#fff' });
+    this.centerButtonText(this.leaderBoardText, this.leaderBoardButton);
+
+    this.leaderBoardButton.on('pointerdown', () => {
+      this.scene.start('LeaderBoard');
+    });
+
+    this.input.on('pointerover', (event, gameObjects) => {
+      gameObjects[0].setTexture('blueButton2');
+    });
+
+    this.input.on('pointerout', (event, gameObjects) => {
+      gameObjects[0].setTexture('blueButton1');
+    });
+
     // Credits
     this.creditsButton = this.add.sprite(300, 200, 'blueButton1').setInteractive();
     this.centerButton(this.creditsButton, -1);

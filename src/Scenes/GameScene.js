@@ -94,13 +94,12 @@ export default class GameScene extends Phaser.Scene {
     this.player.update();
 
     if (!this.satellites.children.size && this.gameOn) {
-      // this.counter
       this.add.text(400, 300, 'Game Over', { fontSize: '40px', fill: '#fff' });
-      this.player.onDestroy();
+      this.player.onDestroy(this.counter);
       return;
     }
 
-    for (let i = 0; i < this.playerLasers.getChildren().length; i++) {
+    for (let i = 0; i < this.playerLasers.getChildren().length; i += 1) {
       const playerLaser = this.playerLasers.getChildren()[i];
 
       if (playerLaser.x < -playerLaser.displayWidth

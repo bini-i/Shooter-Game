@@ -1,5 +1,6 @@
 // eslint-disable-next-line import/no-unresolved
 import Phaser from 'phaser';
+import domNodeCreator from '../domNodeCreator';
 
 export default class PreloaderScene extends Phaser.Scene {
   constructor() {
@@ -94,6 +95,11 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.image('ground', 'assets/platform.png');
   }
 
+  create() {
+    this.nameLabel = domNodeCreator('label', {}, 'Name');
+    this.nameField = domNodeCreator('input', {});
+  }
+
   init() {
     this.readyCount = 0;
   }
@@ -101,16 +107,7 @@ export default class PreloaderScene extends Phaser.Scene {
   ready() {
     this.readyCount += 1;
     if (this.readyCount === 1) {
-      // const url = 'https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/gTxJ39hkqRHtPuDU1RuN/scores/';
-      // fetch(url, { mode: 'cors' })
-      //   .then((response) => response.json())
-      //   .then((data) => {
-
-      //   })
-      //   .catch((error) => {
-      //     reject(error);
-      //   });
-      this.scene.start('Title');
+      this.scene.start('InputName');
     }
   }
 }
