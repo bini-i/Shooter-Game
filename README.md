@@ -25,6 +25,8 @@ This project is a javascript game built with Phaser 3 where a player is expected
 * [JavaScript](https://en.wikipedia.org/wiki/JavaScript)
 * Phaser 3
 
+## Live Demo
+[Live Demo Link](https://www.binyamhailemeskel.me/Shooter-Game/)
 ## Getting Started
 
 ### To get a local copy up and running follow these simple example steps.
