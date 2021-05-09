@@ -12,6 +12,7 @@ This project is a javascript game built with Phaser 3 where a player is expected
 * [About the Project](#about-the-project)
 * [Built With](#built-with)
 * [Live Demo](#live-demo)
+* [Game Design Document(GDD)](#game-design-document)
 * [Getting Started](#getting-started)
 * [Authors](#authors)
 * [Contributing](#contributing)
@@ -26,7 +27,10 @@ This project is a javascript game built with Phaser 3 where a player is expected
 * Phaser 3
 
 ## Live Demo
-[Live Demo Link](https://www.binyamhailemeskel.me/Shooter-Game/)
+[Live Demo Link](https://www.binyamhailemeskel.me/Shooter-Game/build/)
+
+## Game Design Document
+[Game Design Document (GDD) Link](./game-design-document.md)
 ## Getting Started
 
 ### How to play.
@@ -35,6 +39,7 @@ This project is a javascript game built with Phaser 3 where a player is expected
 3. Click leaderboard to see scores of previous players
 4. Once the game starts, use the left and right arrow keys to move the spaceship to left and right
 5. Use spacebar to shoot down the red asteroids before they crash into the statellites
+6. The game ends when all the satellites are hit by the asteroids.
 ### To get a local copy up and running follow these simple example steps.
 
 1. On the project GitHub page, navigate to the main page of the repository.
