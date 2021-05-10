@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import config from '../Config/config';
+import fetchScore from '../fetchScore';
 
 export default class LeaderboardScene extends Phaser.Scene {
   constructor() {
@@ -8,7 +9,8 @@ export default class LeaderboardScene extends Phaser.Scene {
 
   create() {
     // Game
-    fetch('https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/J0cS5gwuXEpiiRrDlkUW/scores/')
+    const url = 'https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/J0cS5gwuXEpiiRrDlkUW/scores/';
+    fetchScore(url)
       .then((response) => response.json())
       .then((data) => {
         const size = data.result.length;

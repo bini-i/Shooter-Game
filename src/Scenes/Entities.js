@@ -2,6 +2,7 @@
 import Phaser from 'phaser';
 import axios from 'axios'
 import config from '../Config/config';
+import postScore from './../postScore'
 export class Entity extends Phaser.GameObjects.Sprite {
   constructor(scene, x, y, key, type) {
     super(scene, x, y, key);
@@ -57,8 +58,8 @@ export class Player extends Entity {
     this.scene.time.addEvent({
       delay: 1000,
       callback() {
-        axios.post('https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/J0cS5gwuXEpiiRrDlkUW/scores/', {'user': config.name, 'score': score })
-        .then(response => response.data).catch(error => error);
+        const url = 'https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/J0cS5gwuXEpiiRrDlkUW/scores/';
+        postScore(url, config.name, score)
         this.scene.scene.start('Title');
       },
       callbackScope: this,
