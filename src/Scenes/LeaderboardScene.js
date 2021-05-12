@@ -19,10 +19,10 @@ export default class LeaderboardScene extends Phaser.Scene {
         }
       });
 
-    this.backButton = this.add.sprite(300, 200, 'blueButton1').setInteractive();
-    this.centerButton(this.backButton, 0);
+    this.backButton = this.add.sprite(400, 200, 'blueButton1').setInteractive();
+    this.centerButton(this.backButton, -1);
 
-    this.backText = this.add.text(0, 0, 'Back', { fontSize: '32px', fill: '#fff' });
+    this.backText = this.add.text(0, 0, 'Back', { fontSize: '32', fill: '#fff' });
     this.centerButtonText(this.backText, this.backButton);
 
     this.backButton.on('pointerdown', () => {
@@ -41,7 +41,7 @@ export default class LeaderboardScene extends Phaser.Scene {
   centerButton(gameObject, offset = 0) {
     Phaser.Display.Align.In.Center(
       gameObject,
-      this.add.zone(config.width / 2, config.height / 2 - offset * 100,
+      this.add.zone(config.width * 0.75, config.height / 2 - offset * 100,
         config.width, config.height),
     );
   }
