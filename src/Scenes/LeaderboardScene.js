@@ -13,9 +13,12 @@ export default class LeaderboardScene extends Phaser.Scene {
     fetchScore(url)
       .then((response) => response.json())
       .then((data) => {
-        const size = data.result.length;
-        for (let i = 0; i < size; i += 1) {
-          this.add.text(config.width * 0.38, config.height * 0.35 + (i * 30), `${i + 1}. ${data.result[i].user} : ${data.result[i].score}`, { fill: '#ffffff', font: '700 20px Roboto' });
+        let result = data.result.sort((a,b)=>{
+            return b.score - a.score
+        })
+        let topSev = result.slice(0,7)
+        for (let i = 0; i < topSev.length; i += 1) {
+          this.add.text(config.width * 0.38, config.height * 0.35 + (i * 30), `${i + 1}. ${topSev[i].user} : ${topSev[i].score}`, { fill: '#ffffff', font: '700 20px Roboto' });
         }
       });
 
