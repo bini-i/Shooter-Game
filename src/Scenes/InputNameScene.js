@@ -6,12 +6,9 @@ export default class InputNameScene extends Phaser.Scene {
     super('InputName');
   }
 
-  preload() {
-    this.load.html('inputName', 'assets/inputName.html');
-  }
-
   create() {
-    this.add.dom(config.width * 0.5, 200).createFromCache('inputName');
+    this.text = this.add.text(config.width * 0.4, 180, 'Please enter your name', { fill: '#ffffff', font: '400 17px Roboto' });
+    this.input = this.add.dom(config.width * 0.5, 220, 'input');
 
     this.gameButton = this.add.sprite(100, 200, 'blueButton1').setInteractive();
     this.centerButton(this.gameButton, 0);
@@ -20,7 +17,7 @@ export default class InputNameScene extends Phaser.Scene {
     this.centerButtonText(this.gameText, this.gameButton);
 
     this.gameButton.on('pointerdown', () => {
-      config.name = document.getElementById('name').value;
+      config.name = document.querySelector('input').value;
       this.scene.start('Title');
     });
 
