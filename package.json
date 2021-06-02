@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "build": "webpack --progress --mode=production",
+    "build": "webpack --progress --mode=development",
     "watch": "webpack --progress --watch",
     "serve": "webpack serve --mode=development"
   },
