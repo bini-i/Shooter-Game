@@ -14,6 +14,7 @@ This project is a javascript game built with Phaser 3 where a player is expected
 * [Live Demo](#live-demo)
 * [Game Design Document(GDD)](#game-design-document)
 * [Getting Started](#getting-started)
+* [How to run tests](#tests)
 * [Authors](#authors)
 * [Contributing](#contributing)
 * [Show your support](#show-your-support)
@@ -62,6 +63,9 @@ npm run serve
 ```
 http://localhost:8080/
 ```
+## How to run tests
+ - ``` npm install``` to install all dependencies needed for testing.
+ - Execute ```npm test``` to run all the tests.
 ## Authors
 
 👤 **Binyam Hailemeskel**
