@@ -1,0 +1,56 @@
+{
+  "name": "shooter-game",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "build": "webpack --progress --mode=development",
+    "watch": "webpack --progress --watch",
+    "serve": "webpack serve --mode=development"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bini-i/Shooter-Game.git"
+  },
+  "author": "Binyam Hailemeskel",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bini-i/Shooter-Game/issues"
+  },
+  "homepage": "https://github.com/bini-i/Shooter-Game#readme",
+  "devDependencies": {
+    "@azerion/phaser-input": "^2.0.5",
+    "@babel/core": "^7.13.16",
+    "@babel/plugin-proposal-class-properties": "^7.13.0",
+    "@babel/plugin-transform-modules-commonjs": "^7.14.0",
+    "@babel/preset-env": "^7.13.10",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-eslint": "^10.1.0",
+    "babel-loader": "^7.1.5",
+    "copy-webpack-plugin": "^8.1.1",
+    "eslint": "^7.23.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-markdown": "^2.0.0",
+    "jest": "^26.6.3",
+    "jest-canvas-mock": "^2.3.1",
+    "stylelint": "^13.12.0",
+    "stylelint-config-recommended": "^4.0.0",
+    "stylelint-config-standard": "^21.0.0",
+    "stylelint-csstree-validator": "^1.9.0",
+    "stylelint-scss": "^3.19.0",
+    "webpack": "^5.35.1",
+    "webpack-cli": "^4.6.0",
+    "webpack-dev-server": "^3.11.2"
+  },
+  "dependencies": {
+    "axios": "^0.21.1",
+    "jest-fetch-mock": "^3.0.3",
+    "node-fetch": "^2.6.1",
+    "phaser": "^3.54.0"
+  },
+  "resolutions": {
+    "babel-core": "7.0.0-bridge.0"
+  }
+}
